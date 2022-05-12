@@ -1777,6 +1777,60 @@ Fixed:
 ```
 ---
 
+Official:
+```yaml
+  /staking/pool:
+    get:
+      deprecated: true
+      summary: Get the current state of the staking pool
+      tags:
+        - Staking
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              bonded_tokens:
+                type: string
+              not_bonded_tokens:
+                type: string
+        '500':
+          description: Internal Server Error
+```
+
+Fixed:
+```yaml
+  /staking/pool:
+    get:
+      deprecated: true
+      summary: Get the current state of the staking pool
+      tags:
+        - Staking
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              height:
+                type: string
+              result:
+                type: object
+                properties:
+                  bonded_tokens:
+                    type: string
+                  not_bonded_tokens:
+                    type: string
+        '500':
+          description: Internal Server Error
+```
+---
+
 ### Fix description template
 Official:
 ```yaml

@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -98,20 +99,73 @@ swagger:model GetStakingPoolOKBody
 */
 type GetStakingPoolOKBody struct {
 
-	// bonded tokens
-	BondedTokens string `json:"bonded_tokens,omitempty"`
+	// height
+	Height string `json:"height,omitempty"`
 
-	// not bonded tokens
-	NotBondedTokens string `json:"not_bonded_tokens,omitempty"`
+	// result
+	Result *GetStakingPoolOKBodyResult `json:"result,omitempty"`
 }
 
 // Validate validates this get staking pool o k body
 func (o *GetStakingPoolOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateResult(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
-// ContextValidate validates this get staking pool o k body based on context it is used
+func (o *GetStakingPoolOKBody) validateResult(formats strfmt.Registry) error {
+	if swag.IsZero(o.Result) { // not required
+		return nil
+	}
+
+	if o.Result != nil {
+		if err := o.Result.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getStakingPoolOK" + "." + "result")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getStakingPoolOK" + "." + "result")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get staking pool o k body based on the context it is used
 func (o *GetStakingPoolOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateResult(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetStakingPoolOKBody) contextValidateResult(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Result != nil {
+		if err := o.Result.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getStakingPoolOK" + "." + "result")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getStakingPoolOK" + "." + "result")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -126,6 +180,46 @@ func (o *GetStakingPoolOKBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *GetStakingPoolOKBody) UnmarshalBinary(b []byte) error {
 	var res GetStakingPoolOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*GetStakingPoolOKBodyResult get staking pool o k body result
+swagger:model GetStakingPoolOKBodyResult
+*/
+type GetStakingPoolOKBodyResult struct {
+
+	// bonded tokens
+	BondedTokens string `json:"bonded_tokens,omitempty"`
+
+	// not bonded tokens
+	NotBondedTokens string `json:"not_bonded_tokens,omitempty"`
+}
+
+// Validate validates this get staking pool o k body result
+func (o *GetStakingPoolOKBodyResult) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get staking pool o k body result based on context it is used
+func (o *GetStakingPoolOKBodyResult) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetStakingPoolOKBodyResult) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetStakingPoolOKBodyResult) UnmarshalBinary(b []byte) error {
+	var res GetStakingPoolOKBodyResult
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

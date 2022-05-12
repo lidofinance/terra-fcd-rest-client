@@ -27592,10 +27592,15 @@ paths:
           schema:
             type: object
             properties:
-              bonded_tokens:
+              height:
                 type: string
-              not_bonded_tokens:
-                type: string
+              result:
+                type: object
+                properties:
+                  bonded_tokens:
+                    type: string
+                  not_bonded_tokens:
+                    type: string
         '500':
           description: Internal Server Error
   /staking/parameters:
